@@ -1,5 +1,5 @@
 // Manager constructor
-const Manager = require("../lib/Manager.js");
+const Manager = require("../lib/Manager");
 
 // ↓Create Manager Object
 test("Create Manager Object", () => {
@@ -9,7 +9,7 @@ test("Create Manager Object", () => {
     "test@examplemail.com",
     6472065891
   );
-  expect(manager.officeNumber).toEqual(6472065891);
+  expect(manager.OfficeNumber).toEqual(6472065891);
 });
 
 // ↓To get Manager role from getRole function.

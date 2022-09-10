@@ -3,39 +3,20 @@ const inquirer = require("inquirer");
 
 // Declare File system
 const fs = require("fs");
-// ↓Function to generate HTML file using file system "writeToFile".
-function init() {
-  prompts()
-    .then((data) => {
-      return generateHTMLpage(data);
-    })
-    .then((html) => {
-      fs.writeToFile("./dist/index.html", html);
-    })
-    .catch((err) => {
-      console.log(err);
-      return;
-    });
-  console.log(
-    "Success!, your team profile has been generated and can be accessed by opening index.html in dist folder. Thank-you."
-  );
-}
-// Function the initialize the app.
-init();
-
-// HTML generate constant
-const { generateHTMLpage } = require("./src/HTMLpage.js");
 
 // ↓Team constants
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
+// HTML generate constant
+const HTMLpage = require("./src/HTMLpage");
+
 // Team building questions and answers to generate team information.
-const EmployeeProfiling = [];
+const Profiling = [];
 
 // ↓Manager's info prompts to add to the team.
-const ManagerProfile = () => {
+const addManager = () => {
   return (
     inquirer
       .prompt([
@@ -78,50 +59,46 @@ const ManagerProfile = () => {
         },
         {
           type: "input",
-          name: "officeNumber",
+          name: "OfficeNumber",
           message:
             "Please enter a professional use phone number for the employee. (required, 10 digits)",
 
-          validate: (officeNumber) => {
-            if (isNaN(officeNumber)) {
+          validate: (OfficeNumber) => {
+            if (isNaN(OfficeNumber)) {
               console.log("Invalid!, Please try again.");
               return false;
             }
-            if (typeof officeNumber !== "string")
-              officeNumber = officeNumber.toString();
-            if (officeNumber.length === 10) {
-              return officeNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-            } else if (officeNumber.length < 10) {
+            if (typeof OfficeNumber !== "string") {
+              OfficeNumber = OfficeNumber.toString();
+              return OfficeNumber.replace(/(\d{3})(\d{3})(\d{4})/);
+            }
+            if (OfficeNumber.length === 10) {
+              return true;
+            } else if (OfficeNumber.length < 10) {
               console.log(
-                "Invalid!, not enough digits to constitute a phone number. Please try again!"
+                "Invalid!, not enough digits to constitute a phone number."
               );
-            } else if (officeNumber.length > 10) {
+            } else if (OfficeNumber.length > 10) {
               console.log(
-                "Invalid!, Must be less then 10 digits long to constitute a phone number. Please try again!"
+                "Invalid!, Must be less then 10 digits long to constitute a phone number."
               );
             }
           },
         },
       ])
       // ↓Pushing the above info for the html page.
-      .then((ManagerProfile) => {
-        const [name, id, email, officeNumber] = ManagerProfile;
-        const manager = new Manager(name, id, email, officeNumber);
+      .then((ManagerData) => {
+        const { name, id, email, OfficeNumber } = ManagerData;
+        const manager = new Manager(name, id, email, OfficeNumber);
 
-        EmployeeProfiling.push(manager);
-      })
-      .then(ManagerProfile)
-      .then((EmployeeProfiling) => {
-        return generateHTMLpage(EmployeeProfiling);
-      })
-      .then((HTMLmanager) => {
-        return writeFile(HTMLmanager);
+        Profiling.push(manager);
+        console.log(manager);
       })
   );
 };
 
 // ↓Employee's info prompts to add to the team.
-const EmployeeProfile = () => {
+const addEmployee = () => {
   return (
     inquirer
       .prompt([
@@ -129,8 +106,7 @@ const EmployeeProfile = () => {
           type: "list",
           name: "EmployeePositions",
           message: "Please select the employee's position.",
-          choices: ["Engineer", "Intern", "No more team members to add."],
-          default: ["No more team members to add."],
+          choices: ["Engineer", "Intern"],
         },
         {
           type: "input",
@@ -199,27 +175,56 @@ const EmployeeProfile = () => {
             return false;
           },
         },
+        {
+          type: "confirm",
+          name: "AddMoreEmployees",
+          message: "Would you like to add more employees to your team?",
+          default: false,
+        },
       ])
       // ↓Pushing the above info for the html page.
-      .then((EmployeeProfile) => {
-        const [name, id, email, Github, school] = EmployeeProfile;
+      .then((AddEmployee) => {
+        var { name, id, email, role, Github, school, AddMoreEmployees } =
+          AddEmployee;
         var employee;
         // ↓For engineer role
         if (role === "Engineer") {
           employee = new Engineer(name, id, email, Github);
         }
         // ↓For Intern role
-        if (role === "Intern") {
+        else if (role === "Intern") {
           employee = new Intern(name, id, email, school);
+          console.log(employee);
         }
-        EmployeeProfiling.push(employee);
-      })
-      .then(EmployeeProfile)
-      .then((EmployeeProfiling) => {
-        return generateHTMLpage(EmployeeProfiling);
-      })
-      .then((HTMLemployee) => {
-        return writeFile(HTMLemployee);
+        Profiling.push(employee);
+        if (AddMoreEmployees) {
+          return addEmployee(Profiling);
+        }
+        return Profiling;
       })
   );
 };
+
+// ↓Function to generate HTML file using file system "writeToFile".
+const writeToFile = (data) => {
+  fs.writeToFile("./dist/index.html", data, (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(
+      "Success!, your team profile has been generated and can be accessed by opening index.html in dist folder. Thank-you."
+    );
+  });
+};
+addManager()
+  .then(addEmployee)
+  .then((Profiling) => {
+    return HTMLpage(Profiling);
+  })
+  .then((HTMLtemplate) => {
+    return writeToFile(HTMLtemplate);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
