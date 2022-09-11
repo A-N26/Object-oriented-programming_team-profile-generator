@@ -1,9 +1,10 @@
-// ↓Template to generate HTML output to index html.
-const teamCards = (Cards_employees) => {
-  return `
+// ↓To export content to index.html.
+module.exports = EmployeeCards => {
+// ↓Template to generate the HTML output from index js.
+    return`
         <!DOCTYPE html>
         <html lang="en">
-            <head>
+        <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -11,118 +12,111 @@ const teamCards = (Cards_employees) => {
             <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap-grid.min.css">
             <link rel="stylesheet" href="style.css">
             <title>Team Profile Generator</title>
-            </head>
+        </head>
 
-            <body>
-                <header>
-                    <navbar class="mainTitle" id="mainTitle">
-                        <span id="TitleText" class="fluid-container mb-0 w-100 bg-danger"><h class="text:white text-center">My Team</h></span>
-                    </navbar>
-                </header>
+        <body>
+            <header>
+                <navbar class="mainTitle" id="mainTitle"><span id="TitleText" class="fluid-container mb-0 w-100 bg-danger"><h class="text:white text-center">My Team</h></span>
+                </navbar>
+            </header>
 
-                <section>
-                    <div class="container" id="cards">
-                        <div class="row d-flex justify-content-center" id="employeeCards">
-                            ${Cards_employees}
-                        </div>
+            <section>
+                <div class="container" id="cards">
+                    <div class="row d-flex justify-content-center" id="employeeCards">${TeamCards(EmployeeCards)}
                     </div>
-                </section>
-            </body>
+                </div>
+            </section>
+        </body>
         </html>
-        `;
+    `;
 };
 
 // ↓To generate card for each employee with their specified info in the html template above.
-// ↓For Manager card.
-const managerCard = (manager) => {
-  return `
-    <Section class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-title bg-primary text-white">
-            <h2>${manager.name}</h2>
-            <h3><i class="fas fa-mug-hot mr-2"></i>Manager</h3>
-        </div>
+const TeamCards = (EmployeeCards) => {
+    // ↓For Manager card.
+    const managerCard = (manager) => {
+        return `
+            <Section class="col-4 mt-4">
+                <div class="card h-100">
+                    <div class="card-title bg-primary text-white">
+                    <h2>${manager.getName()}</h2>
+                    <h3><i class="fas fa-mug-hot mr-2"></i>Manager</h3>
+                </div>
 
-        <div class="card-content">
-            <ul class="list">
-                <li class="listItem">ID:${manager.id}</li>
-                <li class="listItem">Email: <a href="mailto:${manager.email}">${manager.email}</a></li>
-                <li class="listItem">Office number: ${manager.OfficeNumber}</li>
-            </ul>
-        </div>
-    </Section>
-    `;
-};
-// ↓For Engineer card.
-const engineerCard = (engineer) => {
-  return `
-    <Section class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-title bg-primary text-white">
-            <h2>${engineer.name}</h2>
-            <h3><i class="fas fa-glasses mr-2"></i>Engineer</h3>
-        </div>
+                <div class="card-content">
+                    <ul class="list">
+                        <li class="listItem">ID:${manager.getId()}
+                        </li>
+                        <li class="listItem">Email:<a href="mailto:${manager.getEmail()}">${manager.email}</a>
+                        </li>
+                        <li class="listItem">Office number: ${manager.getOfficeNumber()}
+                        </li>
+                    </ul>
+                </div>
+            </Section>
+        `;
+    };
+    // ↓For Engineer card.
+    const engineerCard = (engineer) => {
+        return `
+            <Section class="col-4 mt-4">
+                <div class="card h-100">
+                    <div class="card-title bg-primary text-white">
+                    <h2>${engineer.getName()}</h2>
+                    <h3><i class="fas fa-glasses mr-2"></i>Engineer</h3>
+                </div>
 
-        <div class="card-content">
-            <ul class="list">
-                <li class="listItem">ID:${engineer.id}</li>
-                <li class="listItem">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
-                <li class="listItem">GitHub: <a href="https://github.com/${engineer.Github}">${engineer.Github}</a></li>
-            </ul>
-        </div>
-    </Section>
-    `;
-};
-// ↓For intern card.
-const internCard = (intern) => {
-  return `
-    <Section class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-title bg-primary text-white">
-            <h2>${intern.name}</h2>
-            <h3><i class="fas fa-user-graduate mr-2"></i>Intern</h3>
-        </div>
+                <div class="card-content">
+                    <ul class="list">
+                        <li class="listItem">ID:${engineer.getId()}</li>
+                        <li class="listItem">Email: <a href="mailto:${engineer.getEmail()}">${engineer.email}</a></li>
+                        <li class="listItem">GitHub: <a href="https://github.com/${engineer.getGithub()}">${engineer.Github}</a></li>
+                    </ul>
+                </div>
+            </Section>
+        `;
+    };
+    // ↓For intern card.
+    const internCard = (intern) => {
+        return `
+            <Section class="col-4 mt-4">
+                <div class="card h-100">
+                    <div class="card-title bg-primary text-white">
+                    <h2>${intern.getName()}</h2>
+                    <h3><i class="fas fa-user-graduate mr-2"></i>Intern</h3>
+                </div>
 
-        <div class="card-content">
-            <ul class="list">
-                <li class="listItem">ID:${intern.id}</li>
-                <li class="listItem">Email: <a href="mailto:${intern.email}">${intern.email}</a></li>
-                <li class="listItem">School: ${intern.school}</li>
-            </ul>
-        </div>
-    </Section>
-    `;
-};
+                <div class="card-content">
+                    <ul class="list">
+                        <li class="listItem">ID:${intern.getId()}</li>
+                        <li class="listItem">Email: <a href="mailto:${intern.getEmail()}">${intern.email}</a></li>
+                        <li class="listItem">School: ${intern.getSchool()}</li>
+                    </ul>
+                </div>
+            </Section>
+        `;
+    };
 
-// ↓Functions to generate array of cards and push to the html template above.
-HTMLpage = (data) => {
-  Array_Cards = [];
+    // ↓Functions to generate array of cards and push to the html template above.
 
-  for (let i = 0; i < data.length; i++) {
-    const employee = data[i];
-    const role = employee.role;
-    // ↓To call manager function.
-    if (role === "Manager") {
-      const Card_manager = managerCard(employee);
-      Array_Cards.push(Card_manager);
-    }
-    // ↓To call engineer function.
-    if (role === "Engineer") {
-      const Card_engineer = engineerCard(employee);
-      Array_Cards.push(Card_engineer);
-    }
-    // ↓To call intern function.
-    if (role === "Intern") {
-      const Card_intern = internCard(employee);
-      Array_Cards.push(Card_intern);
-    }
-  }
-  // ↓To join card array strings.
-  const Cards_employees = Array_Cards.join("");
-  // ↓To show on index html.
-  const finalTeam = teamCards(Cards_employees);
-  return finalTeam;
-};
+    const Cards_Array = [];
 
-// ↓To export content to index.html.
-module.exports = HTMLpage;
+    // ↓To create manager card with details in the html template above.
+    Cards_Array.push(
+        EmployeeCards.filter(employee => employee.getRole() === 'Manager')
+            .map(manager => managerCard(manager))
+    );
+    // ↓To create engineer card with details in the html template above.
+    Cards_Array.push(
+        EmployeeCards.filter(employee => employee.getRole() === 'Engineer')
+            .map(engineer => engineerCard(engineer))
+            .join('\n')
+    );
+    // ↓To create intern card with details in the html template above.
+    Cards_Array.push(
+        EmployeeCards.filter(employee => employee.getRole() === 'Intern')
+            .map(intern => internCard(intern))
+            .join('\n')
+    );
+    return Cards_Array.join('\n')
+}
