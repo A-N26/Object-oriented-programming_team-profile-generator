@@ -260,7 +260,7 @@ function BuildTeam () {
     };
 
     // ↓Function to generate HTML file using file system "writeToFile".
-    const teamPage = () => {
+    function teamPage () {
       fs.writeToFile(path_output, HTMLpage(Profiling))
 
         console.log(
