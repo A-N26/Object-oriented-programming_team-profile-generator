@@ -1,5 +1,6 @@
 // Manager constructor
 const Manager = require("../lib/Manager");
+console.log("this is happening through Manager.js", Manager);
 
 // ↓Create Manager Object
 test("Create Manager Object", () => {

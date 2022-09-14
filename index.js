@@ -23,7 +23,7 @@ function BuildTeam () {
         {
           type: "list",
           name: "EmployeePositions",
-          message: "Please select an employee position to add from teh following.",
+          message: "Please select an employee position to add from the following.",
           choices: ["Manager", "Engineer", "Intern", "No more employees to add to team."],
         },
       ])

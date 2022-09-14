@@ -1,5 +1,6 @@
 // Engineer constructor
 const Engineer = require("../lib/Engineer");
+console.log("this is happening through Engineer.js", Engineer);
 
 // ↓Create Engineer object
 test("create Engineer object", () => {

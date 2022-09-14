@@ -88,8 +88,7 @@ return`
 
     <section>
         <div class="container" id="cards">
-            < class="row d-flex justify-content-center" id="employeeCards">${Cards_Array}</div>
-            </div>
+            <div class="row d-flex justify-content-center" id="employeeCards">${Cards_Array}</div>
         </div>
     </section>
 </body>

@@ -1,5 +1,6 @@
 // Employee constructor
 const Employee = require("../lib/Employee");
+console.log("this is happening through Employee.js", Employee);
 
 //↓Create Employee object
 test("create Employee object", () => {

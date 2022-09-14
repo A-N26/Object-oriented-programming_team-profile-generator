@@ -1,5 +1,6 @@
 // Intern constructor
 const Intern = require("../lib/Intern");
+console.log("this is happening through Intern.js", Intern);
 
 // ↓Create Intern object
 test("create Intern object", () => {
