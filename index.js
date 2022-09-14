@@ -26,8 +26,8 @@ function BuildTeam () {
           message: "Please select an employee position to add from teh following.",
           choices: ["Manager", "Engineer", "Intern", "No more employees to add to team."],
         },
-      ]).then,
-        (AddEmployees) => {
+      ])
+      .then((AddEmployees) => {
           switch (AddEmployees.EmployeePositions) {
             case "Manager":
               addManager();
@@ -41,7 +41,7 @@ function BuildTeam () {
             default:
               teamPage();
           }
-        };
+        });
     };
 
     // ↓Manager's info prompts to add to the team.
@@ -116,8 +116,8 @@ function BuildTeam () {
           ])
           // ↓Pushing the above info for the html page.
           .then((ManagerData) => {
-            const { name, id, email, OfficeNumber } = ManagerData;
-            const manager = new Manager(name, id, email, OfficeNumber);
+            // const { name, id, email, OfficeNumber } = ManagerData;
+            const manager = new Manager(ManagerData.name, ManagerData.id, ManagerData.email, ManagerData.OfficeNumber);
 
             Profiling.push(manager);
             TeamProfile();
@@ -185,8 +185,8 @@ function BuildTeam () {
           },
         ])
         .then((EngineerData) => {
-          var { name, id, email, Github } = EngineerData;
-          const engineer = new Engineer(name, id, email, Github);
+          // var { name, id, email, Github } = EngineerData;
+          const engineer = new Engineer(EngineerData.name, EngineerData.id, EngineerData.email, EngineerData.Github);
           Profiling.push(engineer);
           TeamProfile();
           console.log(engineer);
@@ -251,8 +251,8 @@ function BuildTeam () {
           },
         ])
         .then((InternData) => {
-          var { name, id, email, School } = InternData;
-          const intern = new Intern(name, id, email, School);
+          // var { name, id, email, School } = InternData;
+          const intern = new Intern(InternData.name, InternData.id, InternData.email, InternData.School);
           Profiling.push(intern);
           TeamProfile();
           console.log(intern);
@@ -261,8 +261,10 @@ function BuildTeam () {
 
     // ↓Function to generate HTML file using file system "writeToFile".
     function teamPage () {
-      fs.writeToFile(path_output, HTMLpage(Profiling))
-
+      fs.writeFileSync(path_output, HTMLpage(Profiling))
+      if (!fs.existsSync(output_dir)) {
+        fs.mkdirSync(output_dir);
+      }
         console.log(
           "Success!, your team profile has been generated and can be accessed by opening index.html in dist folder. Thank-you."
         );
