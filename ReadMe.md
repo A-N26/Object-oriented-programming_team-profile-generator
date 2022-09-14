@@ -31,9 +31,21 @@ Javascript,Node.js,Inquirer,Jest
 
 Type `npm i (or install)`, in terminal, which will install the required node_modules (in this case inquirer and jest pkgs) package dependencies folder in directory. Once that is done, head over to the usage section below...
 
+![Index.js file Codes](./media/indexjs-file-codes.gif)
+
+![Source js file Codes](./media/src-js-file-code.gif)
+
+![Library js files&Codes](./media/lib-js-files-codes.gif)
+
+![Tests js files&Codes](./media/tests-js-files-codes.gif)
+
 ## _Usage_
 
 After the above steps are taken care of, run `npm test` in terminal to initiate Jest npm for code testing (and it works as intended!!), and then, run`node index.js` in terminal to initiate inquirer prompts. Answer a list of questions as per required to generate the file (prompts work and show appropriately in console logs but the final html file generated is all borked up and unsatisfactory, and at this point after googling around, asking help from ppl trying thing around i have no clue what more to do...). Once that is done, a `success` statement will pop up in terminal and a file will be saved in the directory.
+
+![Jest test](./media/jest-test.jpg)
+
+![Inquirer prompts with console logs for generating the information in html](./media/node-indexjs-prompts-with-ConsoleLogs-for-generation-process.gif)
 
 ## _Links_
 
