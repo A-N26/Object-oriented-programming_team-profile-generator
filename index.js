@@ -252,7 +252,7 @@ function BuildTeam () {
         ])
         .then((InternData) => {
           // var { name, id, email, School } = InternData;
-          const intern = new Intern(InternData.name, InternData.id, InternData.email, InternData.School);
+          const intern = new Intern(InternData.name, InternData.id, InternData.email, InternData.school);
           Profiling.push(intern);
           TeamProfile();
           console.log(intern);
@@ -260,7 +260,7 @@ function BuildTeam () {
     };
 
     // ↓Function to generate HTML file using file system "writeToFile".
-    function teamPage () {
+    function teamPage() {
       fs.writeFileSync(path_output, HTMLpage(Profiling))
       if (!fs.existsSync(output_dir)) {
         fs.mkdirSync(output_dir);
