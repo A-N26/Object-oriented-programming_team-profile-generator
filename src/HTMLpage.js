@@ -40,7 +40,7 @@ const employeeCard = (Profiling) => {
                     <ul class="list">
                         <li class="listItem">ID:${ Profiling[i].getId().id }</li>
                         <li class="listItem">Email: <a href="mailto:${ Profiling[i].getEmail().email }">${ Profiling[i].getEmail().email }</a></li>
-                        <li class="listItem">GitHub: <a href="https://github.com/${ Profiling[i].getGithub().Github }">${ Profiling[i].getGithub().Github }</a></li>
+                        <li class="listItem">GitHub: <a href="https://github.com/${ Profiling[i].getGithub().Github }">${ Profiling[i].getGithub() }</a></li>
                     </ul>
                 </div>
             </Section>
